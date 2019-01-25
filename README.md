@@ -16,11 +16,12 @@ Reference:
 
 
 Usage:  
-Use the various CTRNN version just like the other RNN models. For documentation on variable connotation see xctrnn_cell.py.  
+Use the various CTRNN versions just like the other RNN models. For documentation on variable connotation see xctrnn_cell.py.  
 
 
 Example:  
 ...  
+import tensorflow as tf
 import models.tensorflow_extend as tf_extend  
 from models.tensorflow_extend import xctrnn_cell, ctrnn_cell, cwrnn_cell  
 ...  
@@ -40,6 +41,23 @@ hid_rnn_cell = tf_extend.xctrnn_cell.ACTRNNCell(
 hiddens, states = tf.nn.dynamic_rnn(hid_rnn_cell, x, dtype=tf.float32)  
 
 
+Update (Jan 2019):
+The CTRNN versions can now be used in tensorflow.keras models as well (tensorflow version 1.12).
 
-
+Example:  
+...  
+import tensorflow as tf
+from tensorflow import keras  
+import models.keras_extend.xctrnn 
+...  
+num_hidden = 60  
+num_hidden_v = [30, 20, 10]  
+tau_hidden_v = [1, 8, 64]  
+...
+model = keras.Sequential()
+...  
+model.add(keras.layers.SimpleRNN(num_hidden)) 
+\# ->  
+model.add(xctrnn.ACTRNN(num_hidden_v, tau_vec=tau_hidden_v)) 
+...  
 
